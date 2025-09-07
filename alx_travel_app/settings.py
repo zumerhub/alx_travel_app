@@ -41,9 +41,6 @@ CORS_ALLOW_ALL_ORIGINS = True # Enable CORS for all origins (for development pur
 # Application definition
 
 INSTALLED_APPS = [
-   
-    
-    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,13 +56,6 @@ INSTALLED_APPS = [
     # apps
     'listings',
     
-    # 'django-environ',
-    # 'drf_yasg',   
-    # 'listings',  
-    # 'celery',
-    # 'django-cors-headers',
-    # 'mysqlclient',
-    # 'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +66,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    "corsheaders.middleware.CorsMiddleware",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
 
 ROOT_URLCONF = 'alx_travel_app.urls'
 
@@ -156,3 +158,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+# Celery configuration
+CELERY_BROKER_URL = "amqp://localhost"
+CELERY_RESULT_BACKEND = "rpc://"
